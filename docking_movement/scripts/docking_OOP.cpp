@@ -9,14 +9,13 @@
 
 class Dock_Robot{
 
-    private:
+    public:
         ros::Subscriber xytsub;
         ros::Subscriber odosub;
         ros::Publisher pub;
         docking_movement::XYT xyt;
         nav_msgs::Odometry odom;
 
-    public:
         float x_offset;
         float y_offset;
         int tries;
@@ -26,6 +25,7 @@ class Dock_Robot{
             y_offset=y;
             xytsub= nh->subscribe("/aruco_single/pose",1000,&Dock_Robot::xyt_callback,this);
             odosub=nh->subscribe("/raw_odom",1000,&Dock_Robot::odo_callback,this);
+            pub=nh->advertise<geometry_msgs::Twist>("cmd_vel",1000);
         }
     
         void xyt_callback(const geometry_msgs::PoseStamped& msg){
@@ -165,11 +165,11 @@ class Dock_Robot{
                     tag_error+=1;
                     if (tag_error>=50)
                     {
-                        ROS_DEBUG("ArUco Tag Out of View");
+                        ROS_INFO_STREAM("ArUco Tag Out of View");
                         cmd.angular.z=0;
                         cmd.linear.x=0;
                         pub.publish(cmd);
-                        ROS_DEBUG("%s",xyt);
+                        ROS_INFO_STREAM(xyt);
                         break;
                     }
                 }
@@ -180,8 +180,8 @@ class Dock_Robot{
                     cmd.angular.z=0;
                     cmd.linear.x=0;
                     pub.publish(cmd);
-                    ROS_DEBUG("Docking Completed");
-                    ROS_DEBUG("%s",xyt);
+                    ROS_INFO_STREAM("Docking Completed");
+                    ROS_INFO_STREAM(xyt);
                 }
                 
                     
@@ -200,6 +200,7 @@ class Dock_Robot{
                 cmd.angular.z=0.12;
                 cmd.linear.x=0;
                 pub.publish(cmd);
+                ROS_INFO_STREAM(xyt);
             }
             cmd.angular.z=0;
             cmd.linear.x=0;
@@ -244,8 +245,9 @@ class Dock_Robot{
 };
 
 int main(int argc, char **argv)
-{   ros::NodeHandle nh;
+{   
     ros::init(argc,argv,"docking_controller");
+    ros::NodeHandle nh;
     Dock_Robot tars4=Dock_Robot(&nh,0.22,0);
     tars4.Start_Docking();
 }
