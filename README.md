@@ -49,7 +49,7 @@ if __name__=='__main__':
     test1.polar_points#gives the polar(r,theta) coordinates of the test points
 ```
 
-![test points](/test_points.png)
+![test points](../test_points.png)
 
 ## dock_test_auto
 
