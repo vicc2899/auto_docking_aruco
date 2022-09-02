@@ -208,3 +208,7 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(docking_light scripts/docking_light.cpp)
+add_dependencies(docking_light ${docking_light_EXPORTED_TARGETS}${catkin_EXPORTED_TARGETS})
+target_link_libraries(docking_light ${catkin_LIBRARIES})

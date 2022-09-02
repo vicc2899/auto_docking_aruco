@@ -41,7 +41,7 @@ class Test_Points:
 
     def generate_instructions(self):
         for i in range(9):
-            self.turning_instructions.append(self.modpi(self.polar_points[i][1]))
+            self.turning_instructions.append(self.modpi(self.polar_points[i][1]+math.pi))
             self.driving_instructions.append(self.polar_points[i][0])
 
     def modpi(self,angle):#maps values to between -pi and pi
@@ -51,14 +51,16 @@ class Test_Points:
         return angle
 
 if __name__ == '__main__':
-    test1=Test_Points(90,1.1,2.5,1)
-    print(test1.carti_points)
-    #print(test1.driving_instructions)
-    #print("\n")
-    #print(test1.turning_instructions)
+    test1=Test_Points(90,1.1,2,1)
+    print(test1.polar_points)
+    print(test1.driving_instructions)
+    print(test1.turning_instructions)
     
     p=np.array(test1.carti_points)
-    plt.scatter(p[:,0],p[:,1])
+    line1=plt.scatter(p[:,0],p[:,1])
+    line2=plt.plot(-test1.offset,0,'r*')
+    line3=plt.plot(0,0,'ko')
+    plt.legend(['Tag Point', 'TARS Home Point', 'Test Points'])
     plt.grid()
     plt.axis('equal')
     plt.show()

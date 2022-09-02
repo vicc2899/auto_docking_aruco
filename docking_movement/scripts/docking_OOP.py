@@ -165,7 +165,7 @@ class Dock_Robot:
             if has_init:
                 rospy.loginfo("spinning...")
                 has_init=0
-            cmd.angular.z=0.1
+            cmd.angular.z=0.12
             cmd.linear.x=0
             self.pub.publish(cmd)
 
