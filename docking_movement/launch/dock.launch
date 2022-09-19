@@ -1,5 +1,5 @@
 <launch>
-    <node pkg="docking_movement" type="docking_light" name="auto_docking_test_node" output="screen"></node>
+    <node pkg="docking_movement" type="docking_OOP" name="auto_docking_test_node" output="screen"></node>
     <param name="x_offset" value="0.22" /> <!-- x offset of camera to robot centre in meter --> 
     <param name="y_offset" value="0" /> <!-- y offset of camera to robot centre in meter --> 
     <include file="/home/nvidia/tars_ws/src/docking_movement/launch/usb_cam_stream_publisher.launch"/>
